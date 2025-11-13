@@ -90,7 +90,7 @@ class _MenuPageState extends State<MenuPage> {
                   icon: const Icon(Icons.menu),
                   onSelected: (v) {
                     if (v == 'favorites') Navigator.of(context).pushNamed('/favorites');
-                    if (v == 'about') showAboutDialog(context: context, applicationName: 'Smart Menu', applicationLegalese: '© Yusufx01');
+                    if (v == 'about') showAboutDialog(context: context, applicationName: 'Smart Menu', applicationLegalese: '© Yusi');
                   },
                   itemBuilder: (_) => [
                     const PopupMenuItem(value: 'favorites', child: Text('Favoriler')),
@@ -151,46 +151,29 @@ class _MenuPageState extends State<MenuPage> {
                                 child: Container(
                                   margin: const EdgeInsets.symmetric(vertical: 6),
                                   decoration: BoxDecoration(
-                                    color: Colors.white.withOpacity(0.06),
+                                    color: Color.fromRGBO(255, 255, 255, 0.06),
                                     borderRadius: BorderRadius.circular(12),
-                                    border: Border.all(color: Colors.white.withOpacity(0.06)),
+                                    border: Border.all(color: Color.fromRGBO(255, 255, 255, 0.06)),
                                     boxShadow: [
-                                      BoxShadow(color: Colors.black.withOpacity(0.12), blurRadius: 8, offset: const Offset(0, 4)),
+                                      BoxShadow(color: Color.fromRGBO(0, 0, 0, 0.12), blurRadius: 8, offset: const Offset(0, 4)),
                                     ],
                                   ),
                                   child: ListTile(
-                            leading: ClipRRect(
+                                    leading: ClipRRect(
                               borderRadius: BorderRadius.circular(8),
                                       child: Hero(
                                         tag: item.id,
-                                        child: Stack(
-                                          children: [
-                                            Image.asset(
-                                              item.image,
-                                              width: 56,
-                                              height: 56,
-                                              fit: BoxFit.cover,
-                                              errorBuilder: (context, _, __) => Container(
-                                                width: 56,
-                                                height: 56,
-                                                color: Colors.grey[200],
-                                                child: const Icon(Icons.fastfood, color: Colors.grey),
-                                              ),
-                                            ),
-                                            Positioned(
-                                              right: -6,
-                                              top: -6,
-                                              child: Container(
-                                                padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                                                decoration: BoxDecoration(
-                                                  gradient: LinearGradient(colors: [Theme.of(context).colorScheme.primary, Colors.amberAccent.shade700]),
-                                                  borderRadius: BorderRadius.circular(8),
-                                                  boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.25), blurRadius: 6)],
-                                                ),
-                                                child: const Text('PREMIUM', style: TextStyle(fontSize: 9, fontWeight: FontWeight.bold, color: Colors.white)),
-                                              ),
-                                            ),
-                                          ],
+                                        child: Image.asset(
+                                          item.image,
+                                          width: 56,
+                                          height: 56,
+                                          fit: BoxFit.cover,
+                                          errorBuilder: (context, _, __) => Container(
+                                            width: 56,
+                                            height: 56,
+                                            color: Colors.grey[200],
+                                            child: const Icon(Icons.fastfood, color: Colors.grey),
+                                          ),
                                         ),
                                       ),
                             ),
@@ -204,18 +187,18 @@ class _MenuPageState extends State<MenuPage> {
                                   Text('${item.price.toStringAsFixed(0)} ₺', style: const TextStyle(fontWeight: FontWeight.bold)),
                                   const SizedBox(width: 8),
                                   Builder(builder: (ctx) {
-                                    final favModel = context.read<FavoritesModel>();
-                                    final isFav = context.select<FavoritesModel, bool>((m) => m.isFavorite(item.id));
+                                    final favModel = ctx.read<FavoritesModel>();
+                                    final isFav = ctx.select<FavoritesModel, bool>((m) => m.isFavorite(item.id));
                                     return GestureDetector(
                                       onTap: () {
                                         favModel.toggle(item.id);
                                         ScaffoldMessenger.of(ctx).showSnackBar(SnackBar(content: Text(isFav ? '${item.name} favorilerden kaldırıldı' : '${item.name} favorilere eklendi')));
                                       },
-                                      child: AnimatedContainer(
-                                        duration: const Duration(milliseconds: 220),
-                                        transform: Matrix4.identity()..scale(isFav ? 1.14 : 1.0),
-                                        child: Icon(isFav ? Icons.favorite : Icons.favorite_border, color: isFav ? Colors.redAccent : Colors.white70),
-                                      ),
+                                          child: AnimatedScale(
+                                            scale: isFav ? 1.14 : 1.0,
+                                            duration: const Duration(milliseconds: 220),
+                                            child: Icon(isFav ? Icons.favorite : Icons.favorite_border, color: isFav ? Colors.redAccent : Colors.white70),
+                                          ),
                                     );
                                   })
                                 ],

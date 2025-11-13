@@ -5,6 +5,7 @@ class MenuItem {
   final double price;
   final String category;
   final String description;
+  final int calories;
 
   MenuItem({
     required this.id,
@@ -13,6 +14,7 @@ class MenuItem {
     required this.price,
     required this.category,
     this.description = '',
+    this.calories = 0,
   });
 }
 
@@ -23,7 +25,8 @@ final List<MenuItem> menuItems = [
     image: 'assets/images/kahve.jpg',
     price: 35,
     category: 'İçecekler',
-    description: 'Geleneksel Türk kahvesi, köpüklü ve taze çekilmiş.'
+    description: 'Klasik, köpüklü Türk kahvesi — sade ya da şekerli tercih edilebilir.',
+    calories: 10,
   ),
   MenuItem(
     id: 'm2',
@@ -31,7 +34,8 @@ final List<MenuItem> menuItems = [
     image: 'assets/images/cay.jpg',
     price: 20,
     category: 'İçecekler',
-    description: 'Demli ve sıcak çay.'
+    description: 'Sıcak, demlenmiş çay. İsteğe bağlı limon ve şeker.',
+    calories: 2,
   ),
   MenuItem(
     id: 'm3',
@@ -39,7 +43,8 @@ final List<MenuItem> menuItems = [
     image: 'assets/images/tatli.jpg',
     price: 50,
     category: 'Tatlılar',
-    description: 'Balkabaklı veya klasik trileçe seçenekleri.'
+    description: 'Hafif sütlü tabanlı tatlı, kremamsı dokusu ile servis edilir.',
+    calories: 420,
   ),
   MenuItem(
     id: 'm4',
@@ -47,7 +52,8 @@ final List<MenuItem> menuItems = [
     image: 'assets/images/tatli.jpg',
     price: 12,
     category: 'Atıştırmalıklar',
-    description: 'Taze susamlı simit.'
+    description: 'Günlük taze pişmiş susamlı simit.',
+    calories: 270,
   ),
   MenuItem(
     id: 'm5',
@@ -55,7 +61,8 @@ final List<MenuItem> menuItems = [
     image: 'assets/images/tatli.jpg',
     price: 45,
     category: 'Kahvaltılar',
-    description: 'Domatesli peynirli menemen.'
+    description: 'Domates, biber ve yumurta ile yapılan ev yapımı menemen.',
+    calories: 320,
   ),
   MenuItem(
     id: 'm6',
@@ -63,7 +70,8 @@ final List<MenuItem> menuItems = [
     image: 'assets/images/tatli.jpg',
     price: 120,
     category: 'Yemekler',
-    description: 'Yanında patates kızartması ile.'
+    description: 'İnce pane edilmiş tavuk göğsü, yanında garnitür ile.',
+    calories: 650,
   ),
   MenuItem(
     id: 'm7',
@@ -71,7 +79,8 @@ final List<MenuItem> menuItems = [
     image: 'assets/images/tatli.jpg',
     price: 75,
     category: 'Tatlılar',
-    description: 'Sıcak ve şerbetli künefe.'
+    description: 'Sıcak, tel kadayıf ve peynirle hazırlanmış tatlı.',
+    calories: 540,
   ),
   MenuItem(
     id: 'm8',
@@ -79,7 +88,8 @@ final List<MenuItem> menuItems = [
     image: 'assets/images/tatli.jpg',
     price: 95,
     category: 'Yemekler',
-    description: 'Ev yapımı burger, cheddar peyniri ile.'
+    description: 'Ev yapımı burger, cheddar peyniri, taze marul ve domates.',
+    calories: 820,
   ),
   MenuItem(
     id: 'm9',
@@ -87,6 +97,7 @@ final List<MenuItem> menuItems = [
     image: 'assets/images/tatli.jpg',
     price: 30,
     category: 'Atıştırmalıklar',
-    description: 'Sıcak ve çıtır.'
+    description: 'Sıcak, çıtır patates kızartması.',
+    calories: 360,
   ),
 ];

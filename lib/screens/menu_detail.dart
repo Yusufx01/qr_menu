@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -81,7 +80,7 @@ class _MenuDetailState extends State<MenuDetail> {
                   Container(
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
-                        colors: [Colors.black.withOpacity(0.45), Colors.transparent],
+                        colors: [Color.fromRGBO(0, 0, 0, 0.45), Colors.transparent],
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
                       ),
@@ -98,7 +97,7 @@ class _MenuDetailState extends State<MenuDetail> {
                         filter: ImageFilter.blur(sigmaX: 8, sigmaY: 8),
                         child: Container(
                           padding: const EdgeInsets.all(14),
-                          color: Colors.black.withOpacity(0.28),
+                          color: Color.fromRGBO(0, 0, 0, 0.28),
                           child: Row(
                             children: [
                               Expanded(
@@ -109,7 +108,7 @@ class _MenuDetailState extends State<MenuDetail> {
                                 decoration: BoxDecoration(
                                   gradient: LinearGradient(colors: [Colors.amber.shade700, Colors.deepOrangeAccent.shade200]),
                                   borderRadius: BorderRadius.circular(12),
-                                  boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.25), blurRadius: 6)],
+                                  boxShadow: [BoxShadow(color: Color.fromRGBO(0, 0, 0, 0.25), blurRadius: 6)],
                                 ),
                                 child: Text('${item.price.toStringAsFixed(0)} ₺', style: GoogleFonts.poppins(color: Colors.white, fontWeight: FontWeight.w800)),
                               ),
@@ -130,7 +129,9 @@ class _MenuDetailState extends State<MenuDetail> {
                 children: [
                   Text('Açıklama', style: GoogleFonts.poppins(fontSize: 16, fontWeight: FontWeight.w700)),
                   Row(
-                    children: List.generate(5, (i) => Icon(Icons.star, size: 18, color: i < 4 ? Colors.amber : Colors.grey.shade400)),
+                    children: [
+                      _infoChip(Icons.local_fire_department, '${widget.item.calories} kcal', ''),
+                    ],
                   ),
                 ],
               ),
@@ -149,11 +150,7 @@ class _MenuDetailState extends State<MenuDetail> {
                   const SizedBox(height: 8),
                   Row(
                     children: [
-                      _infoChip(Icons.timer, 'Hazırlık', '10 dk'),
-                      const SizedBox(width: 8),
-                      _infoChip(Icons.local_fire_department, 'Kalori', '250 kcal'),
-                      const SizedBox(width: 8),
-                      _infoChip(Icons.restaurant, 'Porsiyon', '1 kişilik'),
+                      _infoChip(Icons.local_fire_department, 'Kalori', '${widget.item.calories} kcal'),
                     ],
                   ),
                 ],
@@ -199,7 +196,7 @@ class _MenuDetailState extends State<MenuDetail> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.06),
+        color: Color.fromRGBO(255, 255, 255, 0.06),
         borderRadius: BorderRadius.circular(10),
       ),
       child: Row(

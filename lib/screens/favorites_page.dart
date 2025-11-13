@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import '../models/favorites_model.dart';
-import '../data/menu_items.dart';
 import 'menu_detail.dart';
 
 class FavoritesPage extends StatelessWidget {
