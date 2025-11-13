@@ -25,7 +25,7 @@ class MenuDetail extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
-              height: 300,
+              height: 340,
               child: Stack(
                 fit: StackFit.expand,
                 children: [
@@ -40,29 +40,50 @@ class MenuDetail extends StatelessWidget {
                   Container(
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
-                        colors: [Colors.black.withOpacity(0.35), Colors.transparent],
+                        colors: [Colors.black.withOpacity(0.45), Colors.transparent],
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
                       ),
                     ),
                   ),
                   Positioned(
+                    right: 16,
+                    top: 16,
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(colors: [Theme.of(context).colorScheme.primary, Colors.amberAccent.shade700]),
+                        borderRadius: BorderRadius.circular(12),
+                        boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.25), blurRadius: 8)],
+                      ),
+                      child: const Text('PREMIUM', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                    ),
+                  ),
+                  Positioned(
                     left: 16,
                     right: 16,
-                    bottom: 16,
+                    bottom: 22,
                     child: ClipRRect(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(14),
                       child: BackdropFilter(
-                        filter: ImageFilter.blur(sigmaX: 6, sigmaY: 6),
+                        filter: ImageFilter.blur(sigmaX: 8, sigmaY: 8),
                         child: Container(
-                          padding: const EdgeInsets.all(12),
-                          color: Colors.black.withOpacity(0.25),
+                          padding: const EdgeInsets.all(14),
+                          color: Colors.black.withOpacity(0.28),
                           child: Row(
                             children: [
                               Expanded(
-                                child: Text(item.name, style: GoogleFonts.poppins(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w700)),
+                                child: Text(item.name, style: GoogleFonts.poppins(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w800)),
                               ),
-                              Text('${item.price.toStringAsFixed(0)} ₺', style: GoogleFonts.poppins(color: Colors.white, fontWeight: FontWeight.w700)),
+                              Container(
+                                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                                decoration: BoxDecoration(
+                                  gradient: LinearGradient(colors: [Colors.amber.shade700, Colors.deepOrangeAccent.shade200]),
+                                  borderRadius: BorderRadius.circular(12),
+                                  boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.25), blurRadius: 6)],
+                                ),
+                                child: Text('${item.price.toStringAsFixed(0)} ₺', style: GoogleFonts.poppins(color: Colors.white, fontWeight: FontWeight.w800)),
+                              ),
                             ],
                           ),
                         ),

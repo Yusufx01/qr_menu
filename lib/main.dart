@@ -1,9 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'screens/qr_scan_page.dart';
 import 'screens/menu_page.dart';
+import 'screens/favorites_page.dart';
+import 'models/favorites_model.dart';
 
-void main() {
-  runApp(const SmartMenuApp());
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final favorites = FavoritesModel();
+  await favorites.load();
+  runApp(
+    ChangeNotifierProvider.value(
+      value: favorites,
+      child: const SmartMenuApp(),
+    ),
+  );
 }
 
 class SmartMenuApp extends StatelessWidget {
@@ -22,6 +33,7 @@ class SmartMenuApp extends StatelessWidget {
       routes: {
         '/': (context) => const QRScanPage(),
         '/menu': (context) => const MenuPage(),
+        '/favorites': (context) => const FavoritesPage(),
       },
     );
   }

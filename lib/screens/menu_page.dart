@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'dart:ui';
+
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import '../data/menu_items.dart';
+import '../models/favorites_model.dart';
 import 'menu_detail.dart';
 
 class MenuPage extends StatefulWidget {
@@ -13,6 +17,8 @@ class MenuPage extends StatefulWidget {
 class _MenuPageState extends State<MenuPage> {
   String selectedCategory = 'Tümü';
   String query = '';
+  final Set<int> _visibleItems = {};
+  int _filterHash = 0;
 
   List<String> get categories {
     final cats = menuItems.map((e) => e.category).toSet().toList();
@@ -30,6 +36,17 @@ class _MenuPageState extends State<MenuPage> {
 
   @override
   Widget build(BuildContext context) {
+    final currentHash = selectedCategory.hashCode ^ query.hashCode ^ filteredItems.length;
+    if (currentHash != _filterHash) {
+      _filterHash = currentHash;
+      _visibleItems.clear();
+      for (var i = 0; i < filteredItems.length; i++) {
+        Future.delayed(Duration(milliseconds: 80 * i), () {
+          if (!mounted) return;
+          setState(() => _visibleItems.add(i));
+        });
+      }
+    }
     return Scaffold(
       appBar: AppBar(
         title: Text('Menü', style: GoogleFonts.poppins()),
@@ -69,9 +86,16 @@ class _MenuPageState extends State<MenuPage> {
                   ),
                 ),
                 const SizedBox(width: 8),
-                IconButton(
-                  onPressed: () {},
-                  icon: const Icon(Icons.filter_list),
+                PopupMenuButton<String>(
+                  icon: const Icon(Icons.menu),
+                  onSelected: (v) {
+                    if (v == 'favorites') Navigator.of(context).pushNamed('/favorites');
+                    if (v == 'about') showAboutDialog(context: context, applicationName: 'Smart Menu', applicationLegalese: '© Yusufx01');
+                  },
+                  itemBuilder: (_) => [
+                    const PopupMenuItem(value: 'favorites', child: Text('Favoriler')),
+                    const PopupMenuItem(value: 'about', child: Text('Hakkında')),
+                  ],
                 )
               ],
             ),
@@ -114,53 +138,98 @@ class _MenuPageState extends State<MenuPage> {
                       itemCount: filteredItems.length,
                       itemBuilder: (context, index) {
                         final item = filteredItems[index];
-                        return Card(
-                          margin: const EdgeInsets.symmetric(vertical: 6),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                          elevation: 4,
-                          child: ListTile(
+                        final visible = _visibleItems.contains(index);
+                        return AnimatedOpacity(
+                          duration: const Duration(milliseconds: 450),
+                          opacity: visible ? 1 : 0,
+                          child: Transform.translate(
+                            offset: Offset(0, visible ? 0 : 14),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(12),
+                              child: BackdropFilter(
+                                filter: ImageFilter.blur(sigmaX: 6, sigmaY: 6),
+                                child: Container(
+                                  margin: const EdgeInsets.symmetric(vertical: 6),
+                                  decoration: BoxDecoration(
+                                    color: Colors.white.withOpacity(0.06),
+                                    borderRadius: BorderRadius.circular(12),
+                                    border: Border.all(color: Colors.white.withOpacity(0.06)),
+                                    boxShadow: [
+                                      BoxShadow(color: Colors.black.withOpacity(0.12), blurRadius: 8, offset: const Offset(0, 4)),
+                                    ],
+                                  ),
+                                  child: ListTile(
                             leading: ClipRRect(
                               borderRadius: BorderRadius.circular(8),
-                              child: Hero(
-                                tag: item.id,
-                                child: Image.asset(
-                                  item.image,
-                                  width: 56,
-                                  height: 56,
-                                  fit: BoxFit.cover,
-                                  errorBuilder: (context, _, __) => Container(
-                                    width: 56,
-                                    height: 56,
-                                    color: Colors.grey[200],
-                                    child: const Icon(Icons.fastfood, color: Colors.grey),
-                                  ),
-                                ),
-                              ),
+                                      child: Hero(
+                                        tag: item.id,
+                                        child: Stack(
+                                          children: [
+                                            Image.asset(
+                                              item.image,
+                                              width: 56,
+                                              height: 56,
+                                              fit: BoxFit.cover,
+                                              errorBuilder: (context, _, __) => Container(
+                                                width: 56,
+                                                height: 56,
+                                                color: Colors.grey[200],
+                                                child: const Icon(Icons.fastfood, color: Colors.grey),
+                                              ),
+                                            ),
+                                            Positioned(
+                                              right: -6,
+                                              top: -6,
+                                              child: Container(
+                                                padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                                                decoration: BoxDecoration(
+                                                  gradient: LinearGradient(colors: [Theme.of(context).colorScheme.primary, Colors.amberAccent.shade700]),
+                                                  borderRadius: BorderRadius.circular(8),
+                                                  boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.25), blurRadius: 6)],
+                                                ),
+                                                child: const Text('PREMIUM', style: TextStyle(fontSize: 9, fontWeight: FontWeight.bold, color: Colors.white)),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
                             ),
                             title: Text(item.name, style: GoogleFonts.poppins(fontSize: 16, fontWeight: FontWeight.w600)),
                             subtitle: Text(item.description, maxLines: 1, overflow: TextOverflow.ellipsis),
-                            trailing: SizedBox(
+                                    trailing: SizedBox(
                               width: 120,
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
                                   Text('${item.price.toStringAsFixed(0)} ₺', style: const TextStyle(fontWeight: FontWeight.bold)),
                                   const SizedBox(width: 8),
-                                  IconButton(
-                                    onPressed: () {
-                                      // simple favorite placeholder
-                                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('${item.name} favorilere eklendi')));
-                                    },
-                                    icon: const Icon(Icons.favorite_border),
-                                  ),
+                                  Builder(builder: (ctx) {
+                                    final favModel = context.read<FavoritesModel>();
+                                    final isFav = context.select<FavoritesModel, bool>((m) => m.isFavorite(item.id));
+                                    return GestureDetector(
+                                      onTap: () {
+                                        favModel.toggle(item.id);
+                                        ScaffoldMessenger.of(ctx).showSnackBar(SnackBar(content: Text(isFav ? '${item.name} favorilerden kaldırıldı' : '${item.name} favorilere eklendi')));
+                                      },
+                                      child: AnimatedContainer(
+                                        duration: const Duration(milliseconds: 220),
+                                        transform: Matrix4.identity()..scale(isFav ? 1.14 : 1.0),
+                                        child: Icon(isFav ? Icons.favorite : Icons.favorite_border, color: isFav ? Colors.redAccent : Colors.white70),
+                                      ),
+                                    );
+                                  })
                                 ],
                               ),
                             ),
-                            onTap: () {
-                              Navigator.of(context).push(
-                                MaterialPageRoute(builder: (_) => MenuDetail(item: item)),
-                              );
-                            },
+                                    onTap: () {
+                                      Navigator.of(context).push(
+                                        MaterialPageRoute(builder: (_) => MenuDetail(item: item)),
+                                      );
+                                    },
+                                  ),
+                                ),
+                              ),
+                            ),
                           ),
                         );
                       },
