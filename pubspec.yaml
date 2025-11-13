@@ -1,0 +1,15 @@
+name: smart_menu
+description: Offline QR menü uygulaması
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  qr_code_scanner: ^1.0.0
+  google_fonts: ^6.2.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/images/
