@@ -1,11 +1,11 @@
 class MenuItem {
-  final String id;
-  final String name;
-  final String image;
-  final double price;
-  final String category;
-  final String description;
-  final int calories;
+  final String id; // Benzersiz id
+  final String name; // Ürün adı
+  final String image; // Asset yolu
+  final double price; // Fiyat
+  final String category; // Kategori adı
+  final String description; // Açıklama
+  final int calories; // Kalori bilgisi
 
   MenuItem({
     required this.id,
@@ -18,7 +18,7 @@ class MenuItem {
   });
 }
 
-final List<MenuItem> menuItems = [
+final List<MenuItem> menuItems = [ // Örnek menü verisi
   MenuItem(
     id: 'm1',
     name: 'Türk Kahvesi',
@@ -40,7 +40,7 @@ final List<MenuItem> menuItems = [
   MenuItem(
     id: 'm3',
     name: 'Trileçe',
-    image: 'assets/images/tatli.jpg',
+    image: 'assets/images/trilece.jpg',
     price: 50,
     category: 'Tatlılar',
     description: 'Hafif sütlü tabanlı tatlı, kremamsı dokusu ile servis edilir.',
@@ -49,7 +49,7 @@ final List<MenuItem> menuItems = [
   MenuItem(
     id: 'm4',
     name: 'Simit',
-    image: 'assets/images/tatli.jpg',
+    image: 'assets/images/simit.jpg',
     price: 12,
     category: 'Atıştırmalıklar',
     description: 'Günlük taze pişmiş susamlı simit.',
@@ -58,7 +58,7 @@ final List<MenuItem> menuItems = [
   MenuItem(
     id: 'm5',
     name: 'Menemen',
-    image: 'assets/images/tatli.jpg',
+    image: 'assets/images/menemen.jpg',
     price: 45,
     category: 'Kahvaltılar',
     description: 'Domates, biber ve yumurta ile yapılan ev yapımı menemen.',
@@ -67,7 +67,7 @@ final List<MenuItem> menuItems = [
   MenuItem(
     id: 'm6',
     name: 'Tavuk Şinitzel',
-    image: 'assets/images/tatli.jpg',
+    image: 'assets/images/schnitzel.jpg',
     price: 120,
     category: 'Yemekler',
     description: 'İnce pane edilmiş tavuk göğsü, yanında garnitür ile.',
@@ -76,7 +76,7 @@ final List<MenuItem> menuItems = [
   MenuItem(
     id: 'm7',
     name: 'Künefe',
-    image: 'assets/images/tatli.jpg',
+    image: 'assets/images/kunefe.jpg',
     price: 75,
     category: 'Tatlılar',
     description: 'Sıcak, tel kadayıf ve peynirle hazırlanmış tatlı.',
@@ -85,7 +85,7 @@ final List<MenuItem> menuItems = [
   MenuItem(
     id: 'm8',
     name: 'Cheeseburger',
-    image: 'assets/images/tatli.jpg',
+    image: 'assets/images/cheeseburger.jpg',
     price: 95,
     category: 'Yemekler',
     description: 'Ev yapımı burger, cheddar peyniri, taze marul ve domates.',
@@ -94,7 +94,7 @@ final List<MenuItem> menuItems = [
   MenuItem(
     id: 'm9',
     name: 'Patates kızartması',
-    image: 'assets/images/tatli.jpg',
+    image: 'assets/images/fries.jpg',
     price: 30,
     category: 'Atıştırmalıklar',
     description: 'Sıcak, çıtır patates kızartması.',
